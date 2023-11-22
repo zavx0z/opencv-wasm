@@ -23,6 +23,11 @@ class Component extends HTMLElement {
           img.onload = () => {
             worker.postMessage(dest, [dest])
             worker.postMessage({ type: "imread", param: { element: img.src } })
+            setTimeout(() => {
+              const dataURL = canvas.toDataURL("image/png")
+              const newTab = window.open("about:blank", "image from canvas")
+              newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>")
+            }, 1000)
           }
           break
         case "result":
